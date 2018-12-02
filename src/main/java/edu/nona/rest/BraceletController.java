@@ -8,6 +8,7 @@ import edu.nona.entity.Bracelet;
 import edu.nona.entity.Carer;
 import edu.nona.entity.Poll;
 import edu.nona.entity.Smartphone;
+import edu.nona.exception.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -39,6 +40,11 @@ public class BraceletController {
         return ResponseEntity.created(location).build();
     }
 
+    @GetMapping("/bracelet/{id}")
+    public Bracelet getBracelet(@PathVariable String id) {
+        return braceletRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Bracelet " + id));
+    }
+
     @GetMapping(path = "/bracelets")
     public List<Bracelet> getBracelets() {
         return braceletRepository.findAll();
@@ -46,7 +52,8 @@ public class BraceletController {
 
     @GetMapping("/carer/{username}")
     public Carer getCarer(@PathVariable String username) {
-        return carerRepository.findById(username).orElse(null);
+        return carerRepository.findById(username)
+                .orElseThrow(() -> new NotFoundException("Not Found Carer " + username));
     }
 
     @GetMapping(path = "/carers")
@@ -54,9 +61,9 @@ public class BraceletController {
         return carerRepository.findAll();
     }
 
-    @GetMapping("/carer/{id}")
+    @GetMapping("/smartphone/{id}")
     public Smartphone getSmartphone(@PathVariable String id) {
-        return smartphoneRepository.findById(id).orElse(null);
+        return smartphoneRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Smartphone " + id));
     }
 
     @GetMapping(path = "/smartphones")
@@ -64,8 +71,13 @@ public class BraceletController {
         return smartphoneRepository.findAll();
     }
 
+    @GetMapping(path = "/poll/{id}")
+    public Poll getPoll(@PathVariable Long id) {
+        return pollRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Poll " + id));
+    }
+
     @GetMapping(path = "/polls")
     public List<Poll> getPolls() {
         return pollRepository.findAll();
     }
-    }
+}
