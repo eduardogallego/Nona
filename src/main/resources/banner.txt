@@ -1,0 +1,13 @@
+${Ansi.BLUE}                    _______
+${Ansi.BLUE}       __.....__    \  ___ `'.
+${Ansi.BLUE}   .-''         '.   ' |--.\  \
+${Ansi.BLUE}  /     .-''"'-.  `. | |    \  '
+${Ansi.BLUE} /     /________\   \| |     |  '
+${Ansi.BLUE} |                  || |     |  | _    _
+${Ansi.BLUE} \    .-------------'| |     ' .'| '  / |
+${Ansi.BLUE}  \    '-.____...---.| |___.' /'.' | .' |
+${Ansi.BLUE}   `.             .'/_______.'/ /  | /  |
+${Ansi.BLUE}     `''-...... -'  \_______|/ |   `'.  |
+${Ansi.BLUE}                               '   .'|  '/
+${Ansi.BLUE}eduardo.gallego@gmail.com       `-'  `--'
+${Ansi.BLUE}www.linkedin.com/in/eduardo-gallego-revilla
