@@ -35,6 +35,14 @@ public class BraceletController {
         this.smartphoneRepository = smartphoneRepository;
     }
 
+    @PostMapping(path = "/bracelets")
+    public ResponseEntity<Object> addBracelet(@RequestBody Bracelet bracelet) {
+        Bracelet newBracelet = braceletRepository.save(bracelet);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newBracelet.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
     @PostMapping(path = "/carers")
     public ResponseEntity<Object> addCareer(@RequestBody Carer carer) {
         Carer newCarer = carerRepository.save(carer);
