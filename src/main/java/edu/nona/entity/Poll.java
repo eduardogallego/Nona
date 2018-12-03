@@ -84,6 +84,10 @@ public class Poll implements Serializable {
         return battery;
     }
 
+    public void setBracelet(Bracelet bracelet) {
+        this.bracelet = bracelet;
+    }
+
     @Override
     public String toString() {
         return "Poll{" +

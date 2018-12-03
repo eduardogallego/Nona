@@ -40,9 +40,37 @@ public class BraceletController {
         return ResponseEntity.created(location).build();
     }
 
-    @GetMapping("/bracelet/{id}")
+    @PostMapping(path = "/bracelets/{braceletid}/polls")
+    public ResponseEntity<Object> addPoll(@PathVariable String braceletid, @RequestBody Poll poll) {
+        Bracelet bracelet = braceletRepository.findById(braceletid)
+                .orElseThrow(() -> new NotFoundException("Not Found Bracelet " + braceletid));
+        poll.setBracelet(bracelet);
+        Poll newPoll = pollRepository.save(poll);
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{pollid}")
+                .buildAndExpand(newPoll.getId()).toUri();
+        return ResponseEntity.created(location).build();
+    }
+
+    @GetMapping("/bracelets/{id}")
     public Bracelet getBracelet(@PathVariable String id) {
         return braceletRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Bracelet " + id));
+    }
+
+    @GetMapping("/bracelets/{id}/polls")
+    public List<Poll> getBraceletPolls(@PathVariable String id) {
+        Bracelet bracelet = braceletRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Not Found Bracelet " + id));
+        return bracelet.getPollList();
+    }
+
+    @GetMapping("/bracelets/{braceletid}/polls/{pollid}")
+    public Poll getBraceletPoll(@PathVariable String braceletid, @PathVariable Long pollid) {
+        Poll poll = pollRepository.findById(pollid)
+                .orElseThrow(() -> new NotFoundException("Not Found Poll " + pollid));
+        if (!poll.getBraceletId().equals(braceletid)) {
+            throw new NotFoundException("Not Found Bracelet " + braceletid + " Poll " + pollid);
+        }
+        return poll;
     }
 
     @GetMapping(path = "/bracelets")
@@ -50,7 +78,7 @@ public class BraceletController {
         return braceletRepository.findAll();
     }
 
-    @GetMapping("/carer/{username}")
+    @GetMapping("/carers/{username}")
     public Carer getCarer(@PathVariable String username) {
         return carerRepository.findById(username)
                 .orElseThrow(() -> new NotFoundException("Not Found Carer " + username));
@@ -61,7 +89,7 @@ public class BraceletController {
         return carerRepository.findAll();
     }
 
-    @GetMapping("/smartphone/{id}")
+    @GetMapping("/smartphones/{id}")
     public Smartphone getSmartphone(@PathVariable String id) {
         return smartphoneRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Smartphone " + id));
     }
@@ -71,7 +99,7 @@ public class BraceletController {
         return smartphoneRepository.findAll();
     }
 
-    @GetMapping(path = "/poll/{id}")
+    @GetMapping(path = "/polls/{id}")
     public Poll getPoll(@PathVariable Long id) {
         return pollRepository.findById(id).orElseThrow(() -> new NotFoundException("Not Found Poll " + id));
     }

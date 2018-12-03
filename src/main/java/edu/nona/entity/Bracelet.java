@@ -26,7 +26,7 @@ public class Bracelet implements Serializable {
     @ManyToMany(mappedBy = "braceletList")
     @JsonIgnore
     private List<Carer> carerList;
-    @OneToMany(mappedBy = "bracelet")
+    @OneToMany(mappedBy = "bracelet", fetch = FetchType.EAGER)
     @JsonIgnore
     private List<Poll> pollList;
 
